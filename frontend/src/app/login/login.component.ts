@@ -80,7 +80,7 @@ export class LoginComponent {
       },
       error: (err: any) => {
         this.isLoading = false;
-        this.error = err.error?.error || 'Login failed. Please try again.';
+        this.error = err.error?.error || err.error?.message || (typeof err.error === 'string' ? err.error : err.message) || 'Login failed. Please try again.';
       }
     });
   }

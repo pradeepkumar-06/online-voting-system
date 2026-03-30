@@ -113,7 +113,7 @@ export class DashboardComponent implements OnInit {
         this.fetchData();
       },
       error: (err: any) => {
-        alert('Error: ' + (typeof err.error === 'string' ? err.error : err.error?.error));
+        alert('Error: ' + (err.error?.error || err.error?.message || (typeof err.error === 'string' ? err.error : err.message) || 'An unknown error occurred'));
       }
     });
   }
@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit {
     if (confirm('Are you sure you want to end the voting and publish results? This cannot be undone.')) {
       this.votingService.endVoting().subscribe({
         next: () => this.fetchData(),
-        error: (err: any) => alert('Error: ' + err.error?.error)
+        error: (err: any) => alert('Error: ' + (err.error?.error || err.error?.message || (typeof err.error === 'string' ? err.error : err.message) || 'An unknown error occurred'))
       });
     }
   }
@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
     if (confirm('Are you sure you want to completely RESET the voting? All votes and user statuses will be cleared, and voting will be set back to active.')) {
       this.votingService.resetVoting().subscribe({
         next: () => this.fetchData(),
-        error: (err: any) => alert('Error: ' + err.error?.error)
+        error: (err: any) => alert('Error: ' + (err.error?.error || err.error?.message || (typeof err.error === 'string' ? err.error : err.message) || 'An unknown error occurred'))
       });
     }
   }

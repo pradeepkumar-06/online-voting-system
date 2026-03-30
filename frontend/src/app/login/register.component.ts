@@ -80,7 +80,7 @@ export class RegisterComponent {
       },
       error: (err: any) => {
         this.isLoading = false;
-        this.error = err.error?.error || 'Registration failed. Please try again.';
+        this.error = err.error?.error || err.error?.message || (typeof err.error === 'string' ? err.error : err.message) || 'Registration failed. Please try again.';
       }
     });
   }

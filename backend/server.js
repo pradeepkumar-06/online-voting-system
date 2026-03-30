@@ -186,4 +186,27 @@ app.post('/api/admin/end-voting', authMiddleware, adminMiddleware, async (req, r
     }
 });
 
+app.post('/api/admin/reset-voting', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        // Reset all candidate votes to 0
+        await Candidate.updateMany({}, { votes: 0 });
+        
+        // Reset all user voting status to false
+        await User.updateMany({}, { hasVoted: false });
+        
+        // Reset settings
+        let settings = await Settings.findOne();
+        if (!settings) settings = new Settings();
+        
+        settings.votingActive = true;
+        settings.resultsPublished = false;
+        await settings.save();
+        
+        res.json({ message: 'Voting has been reset', votingActive: true, resultsPublished: false });
+    } catch (err) {
+        console.error('Reset voting error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

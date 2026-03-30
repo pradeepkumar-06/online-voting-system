@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, CommonModule],
   template: `
     <nav class="p-4 bg-darkCard/80 backdrop-blur border-b border-white/10 flex justify-between items-center z-50 sticky top-0 shadow-lg">
       <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform cursor-pointer">VoteNow</h1>

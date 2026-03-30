@@ -18,7 +18,7 @@ export interface VotingData {
 
 @Injectable({ providedIn: 'root' })
 export class VotingService {
-  private apiUrl = 'https://online-voting-system-mks2.onrender.com/api';
+  private apiUrl = 'https://online-voting-system-mks2.onrender.com';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -36,5 +36,9 @@ export class VotingService {
 
   endVoting() {
     return this.http.post<any>(`${this.apiUrl}/admin/end-voting`, {}, { headers: this.getHeaders() });
+  }
+
+  resetVoting() {
+    return this.http.post<any>(`${this.apiUrl}/admin/reset-voting`, {}, { headers: this.getHeaders() });
   }
 }

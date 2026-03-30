@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
 
   fetchData() {
     this.votingService.getCandidates().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.candidates = data.candidates;
         this.hasVoted = data.hasVoted;
         this.votingActive = data.votingActive;
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
         this.totalVotes = this.candidates.reduce((acc, curr) => acc + (curr.votes || 0), 0);
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error fetching data', err);
         this.loading = false;
       }
@@ -112,7 +112,7 @@ export class DashboardComponent implements OnInit {
       next: () => {
         this.fetchData();
       },
-      error: (err) => {
+      error: (err: any) => {
         alert('Error: ' + (typeof err.error === 'string' ? err.error : err.error?.error));
       }
     });
@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit {
     if (confirm('Are you sure you want to end the voting and publish results? This cannot be undone.')) {
       this.votingService.endVoting().subscribe({
         next: () => this.fetchData(),
-        error: (err) => alert('Error: ' + err.error?.error)
+        error: (err: any) => alert('Error: ' + err.error?.error)
       });
     }
   }
@@ -131,7 +131,7 @@ export class DashboardComponent implements OnInit {
     if (confirm('Are you sure you want to completely RESET the voting? All votes and user statuses will be cleared, and voting will be set back to active.')) {
       this.votingService.resetVoting().subscribe({
         next: () => this.fetchData(),
-        error: (err) => alert('Error: ' + err.error?.error)
+        error: (err: any) => alert('Error: ' + err.error?.error)
       });
     }
   }

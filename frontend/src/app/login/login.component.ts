@@ -78,7 +78,7 @@ export class LoginComponent {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.isLoading = false;
         this.error = err.error?.error || 'Login failed. Please try again.';
       }

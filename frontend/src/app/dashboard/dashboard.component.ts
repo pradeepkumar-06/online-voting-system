@@ -9,8 +9,11 @@ import { AuthService } from '../services/auth.service';
   imports: [CommonModule],
   template: `
     <div class="w-full max-w-5xl mt-10 relative">
-      <div *ngIf="authService.isAdmin() && votingActive" class="absolute right-0 top-0 mt-2">
-        <button (click)="endVoting()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-semibold transition-colors border border-red-500/50 shadow-lg shadow-red-500/20">
+      <div *ngIf="authService.isAdmin()" class="absolute right-0 top-0 mt-2 flex gap-4">
+        <button (click)="resetVoting()" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-semibold transition-colors border border-yellow-500/50 shadow-lg shadow-yellow-500/20">
+          Reset Voting
+        </button>
+        <button *ngIf="votingActive" (click)="endVoting()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-semibold transition-colors border border-red-500/50 shadow-lg shadow-red-500/20">
           End Voting & Publish Results
         </button>
       </div>
@@ -118,6 +121,15 @@ export class DashboardComponent implements OnInit {
   endVoting() {
     if (confirm('Are you sure you want to end the voting and publish results? This cannot be undone.')) {
       this.votingService.endVoting().subscribe({
+        next: () => this.fetchData(),
+        error: (err) => alert('Error: ' + err.error?.error)
+      });
+    }
+  }
+
+  resetVoting() {
+    if (confirm('Are you sure you want to completely RESET the voting? All votes and user statuses will be cleared, and voting will be set back to active.')) {
+      this.votingService.resetVoting().subscribe({
         next: () => this.fetchData(),
         error: (err) => alert('Error: ' + err.error?.error)
       });

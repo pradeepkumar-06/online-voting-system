@@ -18,7 +18,7 @@ export interface VotingData {
 
 @Injectable({ providedIn: 'root' })
 export class VotingService {
-  private apiUrl = 'https://online-voting-system-mks2.onrender.com';
+  private apiUrl = 'https://online-voting-system-mks2.onrender.com/api';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
